@@ -1,9 +1,16 @@
 {% extends 'blog/base.html' %}
 
 {% block different_content %}
-    <h1>This is Home Page!!</h1>
     {% for post in posts %}
-        <h3>By {{post.author}} on {{post.date_posted}}</h3>
-        <p>Content: {{post.content}}</p>
+        <article class="media content-section">
+            <div class="media-body">
+              <div class="article-metadata d-flex justify-content-between">
+                <a class="mr-2" href="#">{{ post.author }}</a>
+                <small class="text-muted" style="text-align: right;">{{post.date_posted|date:"F d, Y"}}</small>
+              </div>
+              <h2><a class="article-title" href="#">{{ post.title }}</a></h2>
+              <p class="article-content">{{ post.content }}</p>
+            </div>
+        </article>
     {% endfor %}
-{% endblock different_content%}
+{% endblock different_content %}
