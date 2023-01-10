@@ -14,6 +14,7 @@
   {% else %}
     <title>Blog Site</title>
   {% endif %}
+
 </head>
 <body>
   <header class="site-header">
@@ -30,8 +31,8 @@
           </div>
           <!-- Navbar Right Side -->
           <div class="navbar-nav ms-auto">
-            <a class="nav-item nav-link" href="#">Login</a>
-            <a class="nav-item nav-link" href="#">Register</a>
+            <a class="nav-item nav-link" href="{% url 'users-login' %}">Login</a>
+            <a class="nav-item nav-link" href="{% url 'users-register' %}">Register</a>
           </div>
         </div>
       </div>
