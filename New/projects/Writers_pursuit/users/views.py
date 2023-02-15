@@ -3,6 +3,7 @@ from django.contrib import messages
 from .forms import UserRegisterForm
 from django.contrib.auth.decorators import login_required
 from .models import Profile
+from django.contrib.auth.models import User
 
 def register(request):
     if request.method == 'POST':
@@ -10,6 +11,10 @@ def register(request):
         if form.is_valid():
             form.save()
             username = form.cleaned_data.get('username')
+            curruser = User.objects.get(username = username)
+            prof = Profile()
+            prof.user = curruser
+            prof.save()
             messages.success(request, f'Account Created Succesfully for {username}!')
             return redirect('blog-home')
         else:
