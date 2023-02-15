@@ -3,7 +3,13 @@
 
 {% block different_content %}    
     <div class="content-section">
-        <h1>{{user.username}}</h1>
-        <img src="profile_pics/{{}}">
+        <div class="media">
+        <img class="rounded-circle account-img" src="{{ user.profile.image.url }}">
+        <div class="media-body">
+            <h2 class="account-heading">{{ user.username }}</h2>
+            <p class="text-secondary">{{ user.email }}</p>
+        </div>
+        </div>
+        <!-- FORM HERE -->
     </div>
 {% endblock different_content %}
