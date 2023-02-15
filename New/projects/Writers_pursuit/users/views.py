@@ -1,17 +1,30 @@
-from django.shortcuts import render
-from django.contrib.auth.forms import UserCreationForm
+from django.shortcuts import render,redirect
+from django.contrib import messages
+from .forms import UserRegisterForm
+from django.contrib.auth.decorators import login_required
+from .models import Profile
 
 def register(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = UserRegisterForm(request.POST)
         if form.is_valid():
+            form.save()
             username = form.cleaned_data.get('username')
-            return render(request, "users/login.html",{"value":1,"username":username})
+            messages.success(request, f'Account Created Succesfully for {username}!')
+            return redirect('blog-home')
         else:
-            return render(request,'users/register.html',{'form':form,"value":1})
+            messages.error(request,f'Error while creating Account! Please try again')
+            return render(request,'users/register.html')
     else:
-        form = UserCreationForm()
-        return render(request, 'users/register.html',{'form':form,"value":0})
+        form = UserRegisterForm()
+        return render(request, 'users/register.html',{"form":form})
 
-def login(request):
-    return render(request,"users/login.html",{"value":0})
+@login_required
+def profile(request):
+    # curr_user = user
+    # , {"user_img" : Profile.objects.get(user = user)}
+    return render(request,'users/profile.html')
+
+# def adminAccess(request):
+#     if request.user.is_superuser:
+        
