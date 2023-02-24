@@ -25,10 +25,20 @@ def register(request):
         form = UserRegisterForm()
         return render(request, 'users/register.html',{"form":form})
 
+
 @login_required
 def profile(request):
-    u_form = UserUpdateForm()
-    p_form = ProfileUpdateForm()
+    if request.method == 'POST':
+        u_form = UserUpdateForm(request.POST,instance=request.user) #we use instance field inside a form when update krna ho existing row in a table. Refer notes.
+        p_form = ProfileUpdateForm(request.POST,request.FILES,instance=request.user.profile)
+        if u_form.is_valid() and p_form.is_valid():
+            u_form.save()
+            p_form.save()
+            messages.success(request, f'Your Profile has been Updated!')
+            return redirect('users-profile')
+    else:
+        u_form = UserUpdateForm(instance=request.user) #instance field se already existing data is loaded in the form.
+        p_form = ProfileUpdateForm(instance=request.user.profile)
 
     context = {
         'u_form' : u_form,
@@ -36,8 +46,6 @@ def profile(request):
     }
     return render(request,'users/profile.html', context)
 
-# def adminAccess(request):
-#     if request.user.is_superuser:
 
 def another_person_profile(request, data): #accepting an extra parameter along with request.
     the_other_user = User.objects.filter(username = data).first()
