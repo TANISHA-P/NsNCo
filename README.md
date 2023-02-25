@@ -3,7 +3,7 @@ This repository is an assignment asked by NsNCo as a part of their shortlisting 
 
 
 SuperUser - TanishaP
-Password - Tan@Web25
+Password - 123456@T
 
 All other users have the same password.
 
