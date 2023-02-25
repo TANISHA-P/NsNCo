@@ -6,6 +6,7 @@ from .models import Profile
 from django.contrib.auth.models import User
 from .forms import UserUpdateForm,ProfileUpdateForm
 
+
 def register(request):
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
